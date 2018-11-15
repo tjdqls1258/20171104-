@@ -9,6 +9,8 @@ void Player::draw()
 }
 void Player::update()
 {
+	m_velocity.setX(0);
+	m_velocity.setY(0);
 	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
 	m_acceleration.setX(1);
 	SDLGameObject::update();
