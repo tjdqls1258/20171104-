@@ -5,8 +5,8 @@
 class Game
 {
 public:
-	Game();
-	~Game();
+	Game() {}
+	~Game() {}
 	bool init(const char* title, int xpos, int ypos,
 		int width, int height, bool fullscreen);
 
@@ -20,6 +20,7 @@ private:
 	SDL_Window * m_pWindow = 0;
 	SDL_Renderer* m_pRenderer = 0;
 	bool m_bRunning = true;
+	SDL_Texture* m_pTexture;
+	SDL_Rect m_sourceRectangle; 
+	SDL_Rect m_destubationRetangle; 
 };
-};
-
