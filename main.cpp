@@ -13,5 +13,6 @@ int main(int argc, char* args[])
 		g_game->update();//정보 업데이트
 		g_game->render();//정보를 바탕으로 그려줌
 	}
+	g_game->clean();
 	return 0;
 }
