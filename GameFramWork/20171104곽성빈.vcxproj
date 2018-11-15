@@ -146,6 +146,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SDLGameObject.h" />
     <ClInclude Include="TextureManger.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
