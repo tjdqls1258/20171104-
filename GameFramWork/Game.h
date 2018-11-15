@@ -1,5 +1,5 @@
 #pragma once
-#include "TextureManger.h"
+#include "Player.h"
 
 class Game
 {
@@ -21,4 +21,8 @@ private:
 	bool m_bRunning = true;
 
 	int m_currentFrame;
+
+	GameObject m_go;
+	Player m_player;
+
 };
