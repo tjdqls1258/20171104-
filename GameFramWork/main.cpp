@@ -1,19 +1,35 @@
-#include <SDL.h>
 #include "Game.h"
 
-Game* g_game = 0;
+typedef Game TheGame;
 
-int main(int argc, char* args[])
+int main(int argc, char* argv[])
 {
-	g_game = new Game();
-	g_game->init("Chater 1", 100, 100, 640, 480, false);//windows창 생성
-	while (g_game->running())
+	Uint32 frameStart, frameTime;
+	const int FPS = 60;
+	const int DELAY_TIME = 1000.0f / FPS;
+	std::cout << "game init attempt...\n";
+	if (TheGame::Instance()->init("Chapter 1", 100, 100, 640, 480, false))
 	{
-		g_game->handleEvents();//사용자 입력
-		g_game->update();//정보 업데이트
-		g_game->render();//정보를 바탕으로 그려줌
-		SDL_Delay(10);
+		std::cout << "game init success!\n";
+		while (TheGame::Instance()->running())
+		{
+			frameStart = SDL_GetTicks();
+			TheGame::Instance()->handleEvents();
+			TheGame::Instance()->update();
+			TheGame::Instance()->render();
+			frameTime = SDL_GetTicks() - frameStart;
+
+			if (frameTime< DELAY_TIME)
+			{
+				SDL_Delay((int)(DELAY_TIME - frameTime));
+			}
+		}
 	}
-	g_game->clean();
+	else {
+		std::cout << "game init failure - " << SDL_GetError() << "\n";
+		return -1;
+	}
+	std::cout << "game closing...\n";
+	TheGame::Instance()->clean();
 	return 0;
 }
