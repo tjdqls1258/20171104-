@@ -10,12 +10,18 @@ bool Game::init(const char* title, int xpos, int ypos,
 		{
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 
-			SDL_Surface *pTempSurface = SDL_LoadBMP("assets/rider.bmp");
+			SDL_Surface *pTempSurface = SDL_LoadBMP("Assets/animate.bmp");
 			m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
 
 			SDL_FreeSurface(pTempSurface);
 
-			SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+			m_sourceRectangle.w = 128;
+			m_sourceRectangle.h = 82;
+
+			m_destubationRetangle.x = m_sourceRectangle.x = 0;
+			m_destubationRetangle.y = m_sourceRectangle.y = 0;
+			m_destubationRetangle.h = m_sourceRectangle.h;
+			m_destubationRetangle.w = m_sourceRectangle.w;
 		}
 	}
 	else
@@ -28,11 +34,6 @@ bool Game::init(const char* title, int xpos, int ypos,
 
 void Game::render()
 {
-	m_destubationRetangle.x = m_sourceRectangle.x = 0;
-	m_destubationRetangle.y = m_sourceRectangle.y = 0;
-	m_destubationRetangle.h = m_sourceRectangle.h;
-	m_destubationRetangle.w = m_sourceRectangle.w;
-
 	SDL_RenderClear(m_pRenderer);
 	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destubationRetangle);
 	SDL_RenderPresent(m_pRenderer);
@@ -60,4 +61,9 @@ void Game::handleEvents()
 			break;
 		}
 	}
+}
+
+void Game::update()
+{
+	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 }
