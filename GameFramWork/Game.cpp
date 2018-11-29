@@ -3,7 +3,6 @@
 #include "Enemy.h"
 #include "LoaderParams.h"
 #include "InputHandler.h"
-#include"GameStateMachine.h"
 #include "MenuState .h"
 #include "PlayState.h"
 Game* Game::s_pInstance = 0;
