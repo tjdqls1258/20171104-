@@ -17,9 +17,11 @@ public:
 		return s_pInstance;
 	}
 	virtual std::string getStateID() const { return s_menuID; }
+
 private:
 	static const std::string s_menuID;
 	static MenuState* s_pInstance;
-	
+	static void s_exitFromMenu();
+	static void s_menuToPlay();
 	MenuState() {}
 };

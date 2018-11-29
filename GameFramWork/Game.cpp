@@ -7,7 +7,6 @@
 #include "MenuState .h"
 #include "PlayState.h"
 Game* Game::s_pInstance = 0;
-GameStateMachine* m_pGameStateMachine;
 PlayState* m_pPlayState;
 bool Game::init(const char* title, int xpos, int ypos,
 	int width, int height, bool fullscreen)
@@ -15,7 +14,10 @@ bool Game::init(const char* title, int xpos, int ypos,
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
 	{
 		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, fullscreen);
-		
+		if (m_pWindow != 0)
+		{
+			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
+		}
 		m_pGameStateMachine = new GameStateMachine();
 		m_pGameStateMachine->changeState(MenuState::Instance());
 

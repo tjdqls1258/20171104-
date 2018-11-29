@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include <vector>
+#include "GameStateMachine.h"
 //#include "GameStateMachine.h"
 class Game
 {
@@ -24,7 +25,9 @@ public:
 		}
 		return s_pInstance;
 	}
+	
 	void quit();
+	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 private:
 	Game() {}
 	static Game* s_pInstance;
@@ -32,7 +35,8 @@ private:
 	SDL_Renderer* m_pRenderer = 0;
 	std::vector<GameObject*> m_gameObjects;
 	bool m_bRunning = true;
-
+	GameStateMachine* m_pGameStateMachine;
+	
 };
 
 typedef Game TheGame;
