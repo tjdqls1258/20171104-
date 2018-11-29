@@ -5,9 +5,9 @@
 
 enum mouse_buttons
 {
-	LEFT = 0,
+	RIGHT = 0,
 	MIDDLE = 1,
-	RIGHT = 2
+	LEFT = 2
 };
 
 
