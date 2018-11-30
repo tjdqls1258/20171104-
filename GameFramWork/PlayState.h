@@ -1,5 +1,7 @@
+#pragma once
 #include "GameState.h"
 
+class SDLGameObject;
 class PlayState : public GameState
 {
 public:
@@ -17,6 +19,7 @@ public:
 		return s_pInstance;
 	}
 	virtual std::string getStateID() const { return s_playID; }
+	bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
 private:
 	static const std::string s_playID;
 	static PlayState* s_pInstance;

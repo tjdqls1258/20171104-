@@ -12,7 +12,7 @@ void Player::update()
 	m_velocity.setX(0);
 	m_velocity.setY(0);
 	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
-	m_acceleration.setX(1);
+	handleInput();
 	SDLGameObject::update();
 }
 void Player::clean()
@@ -20,9 +20,7 @@ void Player::clean()
 }
 void Player::handleInput()
 {
-
 	Vector2D* target = TheInputHandler::Instance()->getMousePosition();
 	m_velocity = *target - m_position;
 	m_velocity /= 50;
-
 }
