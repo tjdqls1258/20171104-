@@ -56,5 +56,13 @@ bool PauseState::onEnter()
 
 bool PauseState::onExit()
 {
+	for (int i = 0; i < m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->clean();
+	}
+	m_gameObjects.clear();
 
+	TheTextureManager::Instance()->clearFromTextureMap("helicopter");
+	std::cout << "exiting PauseState\n";
+	return true;
 }
