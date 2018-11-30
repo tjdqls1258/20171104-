@@ -5,6 +5,12 @@ void GameStateMachine::popState()
 {
 	changeState(m_prevState);
 }
+
+void GameStateMachine::pushState(GameState *pState)
+{
+	changeState(pState);
+}
+
 void GameStateMachine::changeState(GameState *pState)
 {
 	if (pState != NULL)
