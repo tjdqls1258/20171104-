@@ -24,5 +24,8 @@ private:
 	static const std::string s_playID;
 	static PlayState* s_pInstance;
 	std::vector<GameObject*> m_gameObjects;
+	GameObject* m_BackGround;
+	void instance_enemy(int x, int y, int w, int h);
 	PlayState() {}
+	int Timer = 0;
 };

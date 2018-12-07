@@ -6,6 +6,8 @@
 #include"Enemy.h"
 #include"GameOverState.h"
 #include "SDLGameObject.h"
+#include <ctime>
+
 PlayState* PlayState::s_pInstance = nullptr;
 const std::string PlayState::s_playID = "PLAY";
 
@@ -19,13 +21,19 @@ void PlayState::update()
 	else {
 		for (int i = 0; i < m_gameObjects.size(); i++) {
 			m_gameObjects[i]->update();
+			if (checkCollision(
+				dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
+				dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (i != 0))
+			{
+				TheGame::Instance()->getStateMachine()->pushState(
+					GameOverState::Instance());
+			}
 		}
-		if (checkCollision(
-			dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
-			dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
+		Timer += 1;
+		if (Timer >= 60)
 		{
-			TheGame::Instance()->getStateMachine()->pushState(
-				GameOverState::Instance());
+			instance_enemy(1300, rand() % 590, 128, 55);
+			Timer = 0;
 		}
 	}
 }
@@ -40,6 +48,7 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
+	srand((unsigned int)time(NULL));
 	if (!TheTextureManager::Instance()->load("assets/helicopter.png",
 		"helicopter", TheGame::Instance()->getRenderer())) {
 		return false;
@@ -48,14 +57,23 @@ bool PlayState::onEnter()
 		"helicopter2", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
+
 	GameObject* player = new Player(
-		new LoaderParams(500, 100, 128, 55, "helicopter"));
-	GameObject* enemy = new Enemy(
-		new LoaderParams(100, 100, 128, 55, "helicopter2"));
+		new LoaderParams(100, 100, 128, 55, "helicopter"));
 	m_gameObjects.push_back(player);
-	m_gameObjects.push_back(enemy);
+
+	instance_enemy(1300, 100, 128, 55);
+	
 	std::cout << "entering PlayState\n";
 	return true;
+}
+
+void PlayState::instance_enemy(int x, int y, int w, int h)
+{
+	GameObject* enemy = new Enemy(
+		new LoaderParams(x, y, w, h, "helicopter2"));
+
+	m_gameObjects.push_back(enemy);
 }
 
 bool PlayState::onExit()

@@ -19,10 +19,12 @@ void MenuState::update()
 
 void MenuState::render()
 {
+	m_BackGround->draw();
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();
 	}
+	
 }
 
 bool MenuState::onEnter()
@@ -37,14 +39,21 @@ bool MenuState::onEnter()
 	{
 		return false;
 	}
+	if (!TheTextureManager::Instance()->load("assets/BackGround.png",
+		"BackGround", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	m_BackGround = new SDLGameObject(new LoaderParams(0, 0, 1280, 640, "BackGround"));
+
 	GameObject* button1 = new MenuButton(
-		new LoaderParams(100, 100, 400, 100, "playbutton"),
+		new LoaderParams(420, 200, 400, 100, "playbutton"),
 		s_menuToPlay);
 
 	GameObject* button2 = new MenuButton(
-		new LoaderParams(100, 300, 400, 100, "exitbutton"),
+		new LoaderParams(420, 350, 400, 100, "exitbutton"),
 		s_exitFromMenu);
-
+	
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
 
@@ -60,10 +69,12 @@ bool MenuState::onExit()
 		m_gameObjects[i]->clean();
 	}
 	m_gameObjects.clear();
+	m_BackGround->clean();
 	TheTextureManager::Instance()
 		->clearFromTextureMap("playbutton");
 	TheTextureManager::Instance()
 		->clearFromTextureMap("exitbutton");
+	TheTextureManager::Instance()->clearFromTextureMap("BackGround");
 	std::cout << "exiting MenuState\n";
 	return true;
 }

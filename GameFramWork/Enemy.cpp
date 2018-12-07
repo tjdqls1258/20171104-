@@ -1,20 +1,22 @@
 #include "Enemy.h"
 #include "LoaderParams.h"
 #include "InputHandler.h"
-
+#include <ctime>
 Enemy::Enemy(const LoaderParams* pParams) : SDLGameObject(pParams)
 {
-	m_velocity.setY(2);
-	m_velocity.setX(0.001);
+	srand((unsigned int)time(NULL));
+	Speed = rand() % 5 +2;
 }
 void Enemy::update()
 {
 	m_currentFrame = int(((SDL_GetTicks() / 100) % m_numFrames));
-	if (m_position.getY() < 0) {
-		m_velocity.setY(2);
+	if (m_position.getX() > 0) {
+		m_velocity.setX(-Speed);
 	}
-	else if (m_position.getY() > 400) {
-		m_velocity.setY(-2);
+	else if (m_position.getX() < -100) {
+		m_position.setX(1280);
+		m_position.setY(rand() % 590);
+		Speed = rand() % 5 +2;
 	}
 	SDLGameObject::update();
 }

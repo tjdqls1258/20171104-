@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 	const int FPS = 60;
 	const int DELAY_TIME = 1000.0f / FPS;
 	std::cout << "game init attempt...\n";
-	if (TheGame::Instance()->init("Chapter 1", 100, 100, 640, 480, false))
+	if (TheGame::Instance()->init("Chapter 1", 100, 100, 1280, 640, false))
 	{
 		std::cout << "game init success!\n";
 		while (TheGame::Instance()->running())
