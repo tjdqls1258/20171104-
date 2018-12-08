@@ -20,12 +20,15 @@ public:
 	}
 	virtual std::string getStateID() const { return s_playID; }
 	bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
+	bool checkOutSide(SDLGameObject* p1);
 private:
 	static const std::string s_playID;
 	static PlayState* s_pInstance;
 	std::vector<GameObject*> m_gameObjects;
-	GameObject* m_BackGround;
-	void instance_enemy(int x, int y, int w, int h);
+	std::vector<GameObject*> m_BackGround;
+	void instance_enemy(int x, int y, int w, int h, int xSpeed, int ySpeed);
+	void instance_BackGround(int x, int y, int w, int h);
 	PlayState() {}
-	int Timer = 0;
+	float Timer = 0.0f;
+	float dley = 0.0f;
 };

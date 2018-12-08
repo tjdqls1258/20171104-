@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "InputHandler.h"
 #include"PauseState.h"
+#include "BackGround.h"
 #include"Enemy.h"
 #include"GameOverState.h"
 #include "SDLGameObject.h"
@@ -28,22 +29,45 @@ void PlayState::update()
 				TheGame::Instance()->getStateMachine()->pushState(
 					GameOverState::Instance());
 			}
+			else if (checkOutSide(dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (i != 0))
+			{
+				m_gameObjects[i]->clean();
+			}
 		}
-		Timer += 1;
-		if (Timer >= 60)
+		Timer += 1.0f;
+		if (Timer >= (60.0f - dley))
 		{
-			instance_enemy(1300, rand() % 590, 128, 55);
-			Timer = 0;
+			instance_enemy(1300, rand()%580, 128, 55, rand() % 5 + 5, 0);
+			Timer = 0.0f;
+			if (dley != 30.0f)
+			{
+				dley += 0.04f;
+			}
+			if (dley >= 0.1f)
+			{
+				instance_enemy(rand() % 1300, -60, 128, 55, 0, rand() % 5 + 5);
+			}
+			if (dley >= 0.2f)
+			{
+				instance_enemy(rand() % 1300, -60, 128, 55, rand() % 5 + 5, rand() % 7 + 2);
+			}
+		}
+		for (int j = 0; j < m_BackGround.size(); j++) {
+			m_BackGround[j]->update();
 		}
 	}
 }
 
 void PlayState::render()
 {
+	for (int i = 0; i < m_BackGround.size(); i++) {
+		m_BackGround[i]->draw();
+	}
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();
 	}
+	
 }
 
 bool PlayState::onEnter()
@@ -57,24 +81,38 @@ bool PlayState::onEnter()
 		"helicopter2", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
+	if (!TheTextureManager::Instance()->load("assets/back.png",
+		"back", TheGame::Instance()->getRenderer())) {
+		return false;
+	}
 
 	GameObject* player = new Player(
 		new LoaderParams(100, 100, 128, 55, "helicopter"));
+	
+	instance_BackGround(1280, 0, 1280, 640);
+	instance_BackGround(0, 0, 1280, 640);
 	m_gameObjects.push_back(player);
-
-	instance_enemy(1300, 100, 128, 55);
+	instance_enemy(1300, 100, 128, 55,rand()%5+5,0);
 	
 	std::cout << "entering PlayState\n";
 	return true;
 }
 
-void PlayState::instance_enemy(int x, int y, int w, int h)
+void PlayState::instance_enemy(int x, int y, int w, int h, int xSpeed, int ySpeed)
 {
 	GameObject* enemy = new Enemy(
-		new LoaderParams(x, y, w, h, "helicopter2"));
+		new LoaderParams(x, y, w, h, "helicopter2"), xSpeed, ySpeed);
 
 	m_gameObjects.push_back(enemy);
 }
+void PlayState::instance_BackGround(int x, int y, int w, int h)
+{
+	GameObject* background = new BackGround(
+		new LoaderParams(x, y, w, h, "back"));
+
+	m_BackGround.push_back(background);
+}
+
 
 bool PlayState::onExit()
 {
@@ -113,4 +151,15 @@ bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 	if (rightA <= leftB) { return false; }
 	if (leftA >= rightB) { return false; }
 	return true;
+}
+
+bool  PlayState::checkOutSide(SDLGameObject* p1)
+{
+	int x = p1->getPosition().getX();
+	int out = p1->getHeight() *(-1);
+	if (x < out)
+	{
+		return true;
+	}
+	return false;
 }

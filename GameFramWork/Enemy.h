@@ -7,8 +7,9 @@ private:
 	void handleInput();
 	int m_numFrames = 5;
 	int Speed;
+	int ySpeed;
 public:
-	Enemy(const LoaderParams* pParams);
+	Enemy(const LoaderParams* pParams, int ySpeed, int Speed);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
