@@ -5,6 +5,7 @@ class SDLGameObject;
 class PlayState : public GameState
 {
 public:
+	float retrunscore();
 	virtual void update();
 	virtual void render();
 	virtual bool onEnter();
@@ -31,4 +32,5 @@ private:
 	PlayState() {}
 	float Timer = 0.0f;
 	float dley = 0.0f;
+	float score = 0.0f;
 };

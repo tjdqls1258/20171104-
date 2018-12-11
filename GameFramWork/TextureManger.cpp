@@ -1,5 +1,5 @@
 #include "TextureManger.h"
-
+#include <SDL_ttf.h>
 TextureManager* TextureManager::s_pInstance = nullptr;
 
 bool TextureManager::load(std::string fileName, std::string   id,

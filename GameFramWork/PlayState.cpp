@@ -35,6 +35,7 @@ void PlayState::update()
 			}
 		}
 		Timer += 1.0f;
+		score += 0.01f;
 		if (Timer >= (60.0f - dley))
 		{
 			instance_enemy(1300, rand()%580, 128, 55, rand() % 5 + 5, 0);
@@ -93,7 +94,9 @@ bool PlayState::onEnter()
 	instance_BackGround(0, 0, 1280, 640);
 	m_gameObjects.push_back(player);
 	instance_enemy(1300, 100, 128, 55,rand()%5+5,0);
-	
+	dley = 0.0f;
+	score = 0.0f;
+	Timer = 0.0f;
 	std::cout << "entering PlayState\n";
 	return true;
 }
@@ -162,4 +165,9 @@ bool  PlayState::checkOutSide(SDLGameObject* p1)
 		return true;
 	}
 	return false;
+}
+
+float PlayState::retrunscore()
+{
+	return score * 100;
 }

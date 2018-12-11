@@ -5,6 +5,7 @@
 #include "TextureManger.h"
 #include"AnimatedGraphic.h"
 #include"MenuButton.h"
+#include <sstream>
 
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 GameOverState* GameOverState::s_pInstance = nullptr;
@@ -21,6 +22,7 @@ void GameOverState::s_restartPlay()
 }
 bool GameOverState::onEnter()
 {
+	
 	if (!TheTextureManager::Instance()->load("assets/gameover.png",
 		"gameovertext", TheGame::Instance()->getRenderer()))
 	{
@@ -37,20 +39,23 @@ bool GameOverState::onEnter()
 		return false;
 	}
 	GameObject* gameOverText = new AnimatedGraphic(
-		new  LoaderParams(200, 100, 190, 30, "gameovertext"), 2);
+		new  LoaderParams(520, 100, 190, 30, "gameovertext"), 2);
 
 	GameObject* button1 = new MenuButton(
-		new LoaderParams(200, 200, 200, 80, "mainbutton"),
+		new LoaderParams(520, 200, 200, 80, "mainbutton"),
 		s_gameOverToMain);
 
 	GameObject* button2 = new MenuButton(
-		new LoaderParams(200, 300, 200, 80, "restartbutton"),
+		new LoaderParams(520, 300, 200, 80, "restartbutton"),
 		s_restartPlay);
 
 	m_gameObjects.push_back(gameOverText);
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
 	std::cout << "entering PauseState\n";
+	std::cout <<"Á¡¼ö´Â : " << PlayState::Instance()->retrunscore()<<"\n";
+
+
 	return true;
 }
 
