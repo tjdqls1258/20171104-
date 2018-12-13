@@ -61,10 +61,6 @@ void PlayState::update()
 			{
 				dley += 0.04f;
 			}
-			if (dley >= 0.2f)
-			{
-				instance_enemy(rand() % 1300, -60, 128, 55, 0, rand() % 5 + 5);
-			}
 			if (dley >= 0.4f)
 			{
 				instance_enemy(rand() % 1300, -60, 128, 55, rand() % 5 + 5, rand() % 7 + 2);

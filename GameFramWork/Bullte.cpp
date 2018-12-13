@@ -18,9 +18,13 @@ void Bullte::update()
 {
 	if (!coll)
 	{
-		m_position.setX(m_position.getX() + 1);
+		m_position.setX(m_position.getX() + 20);
 		m_currentFrame = 0;
 		SDLGameObject::update();
+		if (m_position.getX() > 1280)
+		{
+			coll = true;
+		}
 	}
 }
 void Bullte::clean()
