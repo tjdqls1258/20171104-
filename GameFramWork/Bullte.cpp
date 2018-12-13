@@ -3,9 +3,10 @@
 #include "Game.h"
 #include "Enemy.h"
 
-Bullte::Bullte(const LoaderParams* pParams) :
+Bullte::Bullte(const LoaderParams* pParams, int speed) :
 	SDLGameObject(pParams)
 {
+	this->speed = speed;
 }
 void Bullte::draw()
 {
@@ -18,23 +19,32 @@ void Bullte::update()
 {
 	if (!coll)
 	{
-		m_position.setX(m_position.getX() + 20);
+		m_velocity.setX(speed);
 		m_currentFrame = 0;
 		SDLGameObject::update();
-		if (m_position.getX() > 1280)
+		/*if (m_position.getX() > 1280||m_position.getX()< 0)
 		{
 			coll = true;
-		}
+		}*/
+		//Colletent::Instance()->setPostion1(m_position.getX(), m_position.getY(), m_height, m_width);
+		/*if (Colletent::Instance()->getColletent())
+		{
+			coll = true;
+		}*/
 	}
 }
 void Bullte::clean()
 {
 	coll = true;
-	m_position.setX(-999.0f);
-	m_position.setY(-999.0f);
+	
 }
 
 void Bullte::handleInput()
 {
 
+}
+
+bool Bullte::returncoll()
+{
+	return coll;
 }

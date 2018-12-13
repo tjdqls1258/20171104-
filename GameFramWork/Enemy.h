@@ -15,5 +15,5 @@ public:
 	virtual void update();
 	virtual void clean();
 	virtual std::string get_textID() { return m_textureID; }
-
+	bool returncoll();
 };

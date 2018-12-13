@@ -13,6 +13,7 @@ public:
 	int getWidth() { return m_width; }
 	int getHeight() { return m_height; }
 	std::string get_textID() { return m_textureID; }
+	bool returncoll() { return coll; }
 protected:
 	Vector2D m_position;
 	Vector2D m_velocity;
@@ -22,5 +23,6 @@ protected:
 	int m_currentRow;
 	int m_currentFrame;
 	std::string m_textureID;
+	bool coll;
 
 };

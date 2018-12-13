@@ -10,6 +10,8 @@
 #include <ctime>
 #include "UITextureManger.h"
 #include <sstream>
+#include "BullteManger.h"
+#include"Colletent.h"
 PlayState* PlayState::s_pInstance = nullptr;
 const std::string PlayState::s_playID = "PLAY";
 
@@ -23,33 +25,43 @@ void PlayState::update()
 			PauseState::Instance());
 	}
 	else {
+		BullteManger::Instance()->update();
 		for (int i = 0; i < m_gameObjects.size(); i++) {
 			m_gameObjects[i]->update();
 			if (checkCollision(
 				dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
-				dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (m_gameObjects[i]->get_textID() == "helicopter2"))
+				dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (i!=0) && (m_gameObjects[i]->get_textID() == "helicopter2"))
 			{
 				TheGame::Instance()->getStateMachine()->pushState(
 					GameOverState::Instance());
 			}
-			else if (checkOutSide(dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (i != 0))
+			for (int j = 0; j < BullteManger::Instance()->m_bullte.size(); j++)
 			{
-				m_gameObjects[i]->clean();
-			}
-			if (i != 0)
-			{
-				for (int j = 1; j < m_gameObjects.size(); j++)
+				
+				if (Colletent::Instance()->getColletent(
+					dynamic_cast<SDLGameObject*>(m_gameObjects[i]),
+					dynamic_cast<SDLGameObject*>(BullteManger::Instance()->m_bullte[j])) && (i != 0))
 				{
-					if (checkCollision(
-						dynamic_cast<SDLGameObject*>(m_gameObjects[i]),dynamic_cast<SDLGameObject*>(m_gameObjects[j]))
-						&& (m_gameObjects[i]->get_textID() != m_gameObjects[j]->get_textID()))
-					{
-						score += 0.1f;
-						m_gameObjects[i]->clean();
-						m_gameObjects[j]->clean();
-					}
+					m_gameObjects.erase(m_gameObjects.begin() + i);
+					i--;
+					BullteManger::Instance()->delete_Bullte(j);
+					j++;
+					score += 1.0f;
 				}
+				else if (checkOutSide(dynamic_cast<SDLGameObject*>(BullteManger::Instance()->m_bullte[j])))
+				{
+					BullteManger::Instance()->delete_Bullte(j);
+					j++;
+				}
+				else if (checkOutSide(dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (i != 0))
+				{
+					m_gameObjects.erase(m_gameObjects.begin() + i);
+					i--;
+				}
+				
 			}
+			
+			
 		}
 		Timer += 1.0f;
 		score += 0.01f;
@@ -86,6 +98,7 @@ void PlayState::render()
 	{
 		m_gameObjects[i]->draw();
 	}
+	BullteManger::Instance()->draw();
 	TheUITextureManager::Instance()->draw(540, 500, 200, 100, TheGame::Instance()->getRenderer(), color, s);
 }
 
@@ -144,6 +157,7 @@ void PlayState::instance_BackGround(int x, int y, int w, int h)
 
 bool PlayState::onExit()
 {
+	BullteManger::Instance()->clean();
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->clean();
@@ -184,8 +198,9 @@ bool PlayState::checkCollision(SDLGameObject* p1, SDLGameObject* p2)
 bool  PlayState::checkOutSide(SDLGameObject* p1)
 {
 	int x = p1->getPosition().getX();
+	int y = p1->getPosition().getY();
 	int out = p1->getHeight() *(-1);
-	if (x < out)
+	if (x < out || y > 640)
 	{
 		return true;
 	}

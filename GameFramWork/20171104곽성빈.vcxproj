@@ -134,6 +134,8 @@
     <ClCompile Include="AnimatedGraphic.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Bullte.cpp" />
+    <ClCompile Include="BullteManger.cpp" />
+    <ClCompile Include="Colletent.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOverState.cpp" />
@@ -153,6 +155,8 @@
     <ClInclude Include="AnimatedGraphic.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Bullte.h" />
+    <ClInclude Include="BullteManger.h" />
+    <ClInclude Include="Colletent.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

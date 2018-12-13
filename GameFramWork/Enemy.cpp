@@ -13,6 +13,7 @@ void Enemy::update()
 {
 	if (!coll)
 	{
+		
 		m_currentFrame = int(((SDL_GetTicks() / 100) % m_numFrames));
 		if (Speed != 0)
 		{
@@ -23,6 +24,13 @@ void Enemy::update()
 			m_velocity.setY(ySpeed);
 		}
 		SDLGameObject::update();
+		//Colletent::Instance()->setPostion2(m_position.getX(), m_position.getY(), m_height, m_width);
+		/*if (Colletent::Instance()->getColletent())
+		{
+			coll = true;
+		}*/
+		
+
 	}
 	
 }
@@ -37,10 +45,12 @@ void Enemy::draw()
 void Enemy::clean()
 {
 	coll = true;
-	m_position.setX(-1999.0f);
-	m_position.setY(-1999.0f);
 }
 void Enemy::handleInput()
 {
 
+}
+bool Enemy::returncoll()
+{
+	return coll;
 }

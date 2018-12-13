@@ -6,6 +6,7 @@ class Player : public SDLGameObject
 private:
 	void handleInput();
 	int dely = 0;
+	int speed = 20;
 public:
 	Player(const LoaderParams* pParams);
 	virtual void draw();

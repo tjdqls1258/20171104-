@@ -1,4 +1,8 @@
 #pragma once
+#ifndef GAMESTATE_H
+#define GAMESTATE_H
+
+
 #include<string>
 #include <vector>
 #include "GameObject.h"
@@ -17,3 +21,5 @@ public:
 	virtual std::string getStateID() const = 0;
 
 };
+
+#endif // !GAMESTATE_H
