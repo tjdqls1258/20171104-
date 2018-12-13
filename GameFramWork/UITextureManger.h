@@ -25,10 +25,10 @@ public:
 		return s_pInstance;
 	}
 
-	bool load(int font_size, SDL_Color color, SDL_Renderer* pRenderer, std::string say);
+	bool load(int font_size, SDL_Renderer* pRenderer);
 
 	void draw(int x, int y, int width, int height,
-		SDL_Renderer* pRenderer,
+		SDL_Renderer* pRenderer, SDL_Color color, std::string say,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameState.h"
-
+#include <sstream>
 class SDLGameObject;
 class PlayState : public GameState
 {
@@ -24,9 +24,9 @@ public:
 	std::vector<GameObject*> m_gameObjects;
 	bool checkOutSide(SDLGameObject* p1);
 private:
-	
+	std::string s;
 	SDL_Color color = { 255,255,255 };
-	std::ostringstream ostr;
+	
 	static const std::string s_playID;
 	static PlayState* s_pInstance;
 	std::vector<GameObject*> m_BackGround;

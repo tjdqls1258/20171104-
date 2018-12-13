@@ -37,8 +37,8 @@ void Enemy::draw()
 void Enemy::clean()
 {
 	coll = true;
-	m_position.setX(-999.0f);
-	m_position.setY(-999.0f);
+	m_position.setX(-1999.0f);
+	m_position.setY(-1999.0f);
 }
 void Enemy::handleInput()
 {

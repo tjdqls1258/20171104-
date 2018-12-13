@@ -22,7 +22,7 @@ void GameOverState::s_restartPlay()
 }
 bool GameOverState::onEnter()
 {
-	std::ostringstream ostr;
+	
 	if (!TheTextureManager::Instance()->load("assets/gameover.png",
 		"gameovertext", TheGame::Instance()->getRenderer()))
 	{
@@ -38,10 +38,8 @@ bool GameOverState::onEnter()
 	{
 		return false;
 	}
-	SDL_Color color = { 255,255,255 };
-	ostr << "Score : " << PlayState::Instance()->retrunscore();
-	std::string s = ostr.str();
-	if (!TheUITextureManager::Instance()->load(24, color, TheGame::Instance()->getRenderer(), s))
+	
+	if (!TheUITextureManager::Instance()->load(24, TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
@@ -90,7 +88,10 @@ void GameOverState::update()
 
 void GameOverState::render()
 {
-	TheUITextureManager::Instance()->draw(540, 500, 200, 100, TheGame::Instance()->getRenderer());
+	std::ostringstream ostr;
+	ostr << "Score : " << PlayState::Instance()->retrunscore();
+	std::string s = ostr.str();
+	TheUITextureManager::Instance()->draw(540, 500, 200, 100 ,TheGame::Instance()->getRenderer(), color, s);
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();

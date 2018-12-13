@@ -73,12 +73,16 @@ void PlayState::update()
 		for (int j = 0; j < m_BackGround.size(); j++) {
 			m_BackGround[j]->update();
 		}
+		std::ostringstream ostr;
+		ostr << "Score : " << score;
+		s = ostr.str();
+		
 	}
 }
 
 void PlayState::render()
 {
-	TheUITextureManager::Instance()->draw(540, 500, 200, 100, TheGame::Instance()->getRenderer());
+
 	for (int i = 0; i < m_BackGround.size(); i++) {
 		m_BackGround[i]->draw();
 	}
@@ -86,7 +90,7 @@ void PlayState::render()
 	{
 		m_gameObjects[i]->draw();
 	}
-	
+	TheUITextureManager::Instance()->draw(540, 500, 200, 100, TheGame::Instance()->getRenderer(), color, s);
 }
 
 bool PlayState::onEnter()
@@ -108,11 +112,10 @@ bool PlayState::onEnter()
 		"bullte", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
-	
-
-	
-	
-
+	if (!TheUITextureManager::Instance()->load(24, TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
 	GameObject* player = new Player(
 		new LoaderParams(100, 100, 128, 55, "helicopter"));
 	

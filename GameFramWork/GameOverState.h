@@ -21,6 +21,7 @@ public:
 	}
 	virtual std::string getStateID() const { return s_gameOverID; }
 private:
+	SDL_Color color = { 255,255,255 };
 	static GameOverState* s_pInstance;
 	static void s_gameOverToMain();
 	static void s_restartPlay();
