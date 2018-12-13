@@ -12,6 +12,7 @@ public:
 	Vector2D & getPosition() { return m_position; }
 	int getWidth() { return m_width; }
 	int getHeight() { return m_height; }
+	std::string get_textID() { return m_textureID; }
 protected:
 	Vector2D m_position;
 	Vector2D m_velocity;

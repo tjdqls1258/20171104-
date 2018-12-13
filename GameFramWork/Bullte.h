@@ -1,15 +1,14 @@
 #pragma once
 #include "SDLGameObject.h"
 
-class Player : public SDLGameObject
+class Bullte : public SDLGameObject
 {
 private:
 	void handleInput();
-	int dely = 0;
+	bool coll = false;
 public:
-	Player(const LoaderParams* pParams);
+	Bullte(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
-	virtual std::string get_textID() { return m_textureID; }
 };

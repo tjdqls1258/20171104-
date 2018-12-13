@@ -11,25 +11,34 @@ Enemy::Enemy(const LoaderParams* pParams, int Speed,int ySpeed) : SDLGameObject(
 }
 void Enemy::update()
 {
-	m_currentFrame = int(((SDL_GetTicks() / 100) % m_numFrames));
-	if (Speed != 0)
+	if (!coll)
 	{
-		m_velocity.setX(-Speed);
+		m_currentFrame = int(((SDL_GetTicks() / 100) % m_numFrames));
+		if (Speed != 0)
+		{
+			m_velocity.setX(-Speed);
+		}
+		if (ySpeed != 0)
+		{
+			m_velocity.setY(ySpeed);
+		}
+		SDLGameObject::update();
 	}
-	if (ySpeed != 0)
-	{
-		m_velocity.setY(ySpeed);
-	}
-	SDLGameObject::update();
 	
 }
 
 void Enemy::draw()
 {
-	SDLGameObject::draw();
+	if (!coll)
+	{
+		SDLGameObject::draw();
+	}
 }
 void Enemy::clean()
 {
+	coll = true;
+	m_position.setX(-999.0f);
+	m_position.setY(-999.0f);
 }
 void Enemy::handleInput()
 {

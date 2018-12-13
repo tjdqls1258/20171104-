@@ -21,11 +21,14 @@ public:
 	}
 	virtual std::string getStateID() const { return s_playID; }
 	bool checkCollision(SDLGameObject* p1, SDLGameObject* p2);
+	std::vector<GameObject*> m_gameObjects;
 	bool checkOutSide(SDLGameObject* p1);
 private:
+	
+	SDL_Color color = { 255,255,255 };
+	std::ostringstream ostr;
 	static const std::string s_playID;
 	static PlayState* s_pInstance;
-	std::vector<GameObject*> m_gameObjects;
 	std::vector<GameObject*> m_BackGround;
 	void instance_enemy(int x, int y, int w, int h, int xSpeed, int ySpeed);
 	void instance_BackGround(int x, int y, int w, int h);

@@ -6,7 +6,7 @@
 #include"AnimatedGraphic.h"
 #include"MenuButton.h"
 #include <sstream>
-
+#include "UITextureManger.h"
 const std::string GameOverState::s_gameOverID = "GAMEOVER";
 GameOverState* GameOverState::s_pInstance = nullptr;
 
@@ -22,7 +22,7 @@ void GameOverState::s_restartPlay()
 }
 bool GameOverState::onEnter()
 {
-	
+	std::ostringstream ostr;
 	if (!TheTextureManager::Instance()->load("assets/gameover.png",
 		"gameovertext", TheGame::Instance()->getRenderer()))
 	{
@@ -35,6 +35,13 @@ bool GameOverState::onEnter()
 	}
 	if (!TheTextureManager::Instance()->load("assets/restart.png",
 		"restartbutton", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	SDL_Color color = { 255,255,255 };
+	ostr << "Score : " << PlayState::Instance()->retrunscore();
+	std::string s = ostr.str();
+	if (!TheUITextureManager::Instance()->load(24, color, TheGame::Instance()->getRenderer(), s))
 	{
 		return false;
 	}
@@ -53,7 +60,8 @@ bool GameOverState::onEnter()
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
 	std::cout << "entering PauseState\n";
-	std::cout <<"Á¡¼ö´Â : " << PlayState::Instance()->retrunscore()<<"\n";
+	
+	std::cout <<"Score : " << PlayState::Instance()->retrunscore()<<"\n";
 
 
 	return true;
@@ -82,6 +90,7 @@ void GameOverState::update()
 
 void GameOverState::render()
 {
+	TheUITextureManager::Instance()->draw(540, 500, 200, 100, TheGame::Instance()->getRenderer());
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();

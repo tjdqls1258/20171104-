@@ -98,7 +98,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="AnimatedGraphic.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Bullte.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOverState.cpp" />
@@ -146,10 +147,12 @@
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="SDLGameObject.cpp" />
     <ClCompile Include="TextureManger.cpp" />
+    <ClCompile Include="UITextureManger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedGraphic.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Bullte.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -165,6 +168,7 @@
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="SDLGameObject.h" />
     <ClInclude Include="TextureManger.h" />
+    <ClInclude Include="UITextureManger.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

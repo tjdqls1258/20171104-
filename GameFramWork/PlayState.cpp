@@ -8,12 +8,15 @@
 #include"GameOverState.h"
 #include "SDLGameObject.h"
 #include <ctime>
-
+#include "UITextureManger.h"
+#include <sstream>
 PlayState* PlayState::s_pInstance = nullptr;
 const std::string PlayState::s_playID = "PLAY";
 
 void PlayState::update()
 {
+	
+
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
 	{
 		TheGame::Instance()->getStateMachine()->pushState(
@@ -24,7 +27,7 @@ void PlayState::update()
 			m_gameObjects[i]->update();
 			if (checkCollision(
 				dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
-				dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (i != 0))
+				dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (m_gameObjects[i]->get_textID() == "helicopter2"))
 			{
 				TheGame::Instance()->getStateMachine()->pushState(
 					GameOverState::Instance());
@@ -32,6 +35,20 @@ void PlayState::update()
 			else if (checkOutSide(dynamic_cast<SDLGameObject*>(m_gameObjects[i])) && (i != 0))
 			{
 				m_gameObjects[i]->clean();
+			}
+			if (i != 0)
+			{
+				for (int j = 1; j < m_gameObjects.size(); j++)
+				{
+					if (checkCollision(
+						dynamic_cast<SDLGameObject*>(m_gameObjects[i]),dynamic_cast<SDLGameObject*>(m_gameObjects[j]))
+						&& (m_gameObjects[i]->get_textID() != m_gameObjects[j]->get_textID()))
+					{
+						score += 0.1f;
+						m_gameObjects[i]->clean();
+						m_gameObjects[j]->clean();
+					}
+				}
 			}
 		}
 		Timer += 1.0f;
@@ -44,11 +61,11 @@ void PlayState::update()
 			{
 				dley += 0.04f;
 			}
-			if (dley >= 0.1f)
+			if (dley >= 0.2f)
 			{
 				instance_enemy(rand() % 1300, -60, 128, 55, 0, rand() % 5 + 5);
 			}
-			if (dley >= 0.2f)
+			if (dley >= 0.4f)
 			{
 				instance_enemy(rand() % 1300, -60, 128, 55, rand() % 5 + 5, rand() % 7 + 2);
 			}
@@ -61,6 +78,7 @@ void PlayState::update()
 
 void PlayState::render()
 {
+	TheUITextureManager::Instance()->draw(540, 500, 200, 100, TheGame::Instance()->getRenderer());
 	for (int i = 0; i < m_BackGround.size(); i++) {
 		m_BackGround[i]->draw();
 	}
@@ -86,6 +104,14 @@ bool PlayState::onEnter()
 		"back", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
+	if (!TheTextureManager::Instance()->load("assets/Bullet.png",
+		"bullte", TheGame::Instance()->getRenderer())) {
+		return false;
+	}
+	
+
+	
+	
 
 	GameObject* player = new Player(
 		new LoaderParams(100, 100, 128, 55, "helicopter"));
@@ -169,5 +195,5 @@ bool  PlayState::checkOutSide(SDLGameObject* p1)
 
 float PlayState::retrunscore()
 {
-	return score * 100;
+	return score;
 }
